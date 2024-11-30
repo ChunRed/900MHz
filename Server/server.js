@@ -12,7 +12,7 @@ app.use(express.static('node_modules'));
 //app.set('views', path.join(__dirname, '../client'));
 
 // setup express router
-app.get('/', function (req, res) {
+app.get('/test', function (req, res) {
     res.render('test');
 }); 
 
