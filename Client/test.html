@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Socket.IO chat</title>
+        <title>900Hz console</title>
         <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font: 13px Helvetica, Arial; }
@@ -17,7 +17,7 @@
     <script src="/Server/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        var socket = io.connect("localhost:3000");
+        let socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");
         
         setInterval(() => {
             socket.emit("chat", Math.floor(Math.random() * 10));
