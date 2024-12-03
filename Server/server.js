@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const path = require('path');
+
 const http = require('http').Server(app);
 const engine = require('ejs-locals');
 const io = require('socket.io')(http)
@@ -12,7 +14,7 @@ app.use(express.static('node_modules'));
 //app.set('views', path.join(__dirname, '../client'));
 
 // setup express router
-app.get('/test', function (req, res) {
+app.get('/', function (req, res) {
     res.render('test');
 }); 
 
@@ -30,10 +32,7 @@ io.on('connection', function (socket) {
 
     socket.on('chat', function (msg) {
         console.log('message from user#' + socket.userId + ": " + msg);
-        io.emit('chat', {
-            id: socket.userId,
-            msg: msg,
-        });
+        io.emit('chat', msg);
     });
 });
 
