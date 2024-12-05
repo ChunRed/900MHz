@@ -17,9 +17,18 @@ const Socket = ({ msg, setMsg }) => {
     let target_value = 0;
 
 
-    const connectWebSocket = () => {
+    const connectWebSocket = (e) => {
         //開啟
-        setWs(webSocket(IP))
+        const { value } = document.querySelector(e.target.getAttribute("data-input"));
+
+        setIP(value);
+
+        console.log(value);
+        
+
+        setWs(webSocket(IP));
+
+        
     }
 
 
@@ -34,8 +43,8 @@ const Socket = ({ msg, setMsg }) => {
 
             })
 
-            ws.on('start', (msg) => {
-                setServerState('connect server');
+            ws.on('get', (msg) => {
+                document.querySelector('.get_message').innerHTML = msg;
             })
         }
     }, [ws])
@@ -53,18 +62,53 @@ const Socket = ({ msg, setMsg }) => {
         display.innerHTML = target_value;
     }
 
+    const ipchange = () => {
+        console.log("change");
+        
+    }
+
 
     return (
-        <div className='text-center ' >
-            <input className='mt-5 btn btn-outline-light' type='button' value='connect server' onClick={connectWebSocket} />
+        <div className='container-fluid  text-center bg-black' >
 
-            {/* <h3 className="text-light mt-3" >{serverState}</h3> */}
+
+
+            <div className="row">
+                <input 
+                id='input_value'
+                type="text" 
+                className="form-control mt-5" 
+                defaultValue="http://huang.us-east-1.elasticbeanstalk.com:8080"
+                aria-label="Recipient's username" 
+                aria-describedby="button-addon2"/>
+            </div>
+
+
+
+            <div className="row">
+                <input 
+                className=' mt-5 btn btn-outline-light' 
+                type='button' 
+                value='connect server' 
+                data-input="#input_value"
+                onClick={(e) => {connectWebSocket(e)}} />
+            </div>
+
+
+
 
             <div className="row mt-5">
                 <div className="socketValue text-center text-light">{target_value}</div>
             </div>
 
-            <input className='mt-2 btn btn-outline-light' type='button' value='send' onClick={sendMessage} />
+
+
+            <input className='row mt-2 btn btn-outline-light' type='button' value='send' onClick={sendMessage} />
+
+
+            <div className="row mt-5">
+                <div className="get_message  text-light">get message : null</div>
+            </div>
 
 
         </div>

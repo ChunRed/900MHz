@@ -34,7 +34,7 @@ io.on('connection', function (socket) {
     socket.on('chat', function (msg) {
         console.log('message from user#' + socket.userId + ": " + msg);
         io.emit('chat', msg);
-        io.emit('get', msg);
+        io.emit('get', "get message: " + msg.toString());
     });
 });
 
