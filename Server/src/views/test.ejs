@@ -7,49 +7,115 @@
 
         <script src="socket.io-client/dist/socket.io.js"></script>
 
-        <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-        <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/bootstrap.js"></script>
+
+        <script src="/bootstrap.min.js"></script>
+
+        <link href="/bootstrap.css" rel="stylesheet">
+        <link href="style/layout.css" rel="stylesheet">
 
     </head>
 
     <body>
-        <div className="container-fluid bg-black ">
+        <div className="container-fluid bg-dark">
 
             <div class="row">
-                <h1 class="text-center ">900hz Socket test</h1>
+                <h1 class="text-center text-light mt-5 mb-5">900hz Socket
+                    test</h1>
             </div>
-
-            <div class="row">
-                <h2 class="socket_value text-center">socket value</h2>
-            </div>
-
-
-            <div className="row mt-1 justify-content-center ">
-                <div className="input-group mt-2 ">
-                    <input id='input_value' type="text" className="form-control" placeholder="your message..." aria-label="Write Message In This Barcode" aria-describedby="basic-addon2" />
-
-                    <div className="input-group-append mt-3">
-                        <button className="btn btn-outline-light" data-input="#input_value" onClick={} type="button">Save</button>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
 
+        <div class="row m-3">
+            <input type="text" class="input_value" id>
+        </div>
 
-        
+        <div class="row m-3">
+            <input
+                class='  btn btn-outline-light'
+                type='button'
+                value='connect custom IP'
+                onClick="SocketCustomConnect()" />
+        </div>
 
+        <div class="row m-3">
+            <input
+                class='  btn btn-outline-light'
+                type='button'
+                value='connect https : 443'
+                onClick="HTTPSConnect()" />
+        </div>
 
+        <div class="row m-3">
+            <input
+                class='  btn btn-outline-light'
+                type='button'
+                value='connect http : 443'
+                onClick="HTTPConnect()" />
+        </div>
+
+        <div class="row mt-5">
+            <div class="send_value text-center text-light">send [chat event] :
+                0</div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="socket_value text-center text-light">get [get event] :
+                0</div>
+        </div>
+
+        <div class="row m-3">
+            <input
+                class='  btn btn-outline-light'
+                type='button'
+                value='send random value to [chat event]'
+                onClick="SendValue()" />
+        </div>
 
         <script>
-            let socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");
+            let socket;
+            SocketConnect();
 
-            socket.on('chat', (msg) => {
-                document.querySelector('.socket_value').innerHTML = "socket value: " + msg;
-                console.log(msg);
+            function SocketCustomConnect(){
+                let IP = document.querySelector('.input_value').value;
+                console.log(IP); 
+                socket = io.connect(IP);   
                 
-            })
+                socket.on('get', (msg) => {
+                    document.querySelector('.socket_value').innerHTML = "get [get event] : " + msg;
+                    
+                })
+            }
+
+            function HTTPSConnect(){
+                console.log('https://huang.us-east-1.elasticbeanstalk.com:443'); 
+                socket = io.connect("https://huang.us-east-1.elasticbeanstalk.com:443");  
+                
+                socket.on('get', (msg) => {
+                    document.querySelector('.socket_value').innerHTML = "get [get event] : " + msg;
+                    
+                })
+            }
+
+
+            function HTTPConnect(){
+                console.log('http://huang.us-east-1.elasticbeanstalk.com:443'); 
+                socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:443");  
+                
+                socket.on('get', (msg) => {
+                    document.querySelector('.socket_value').innerHTML = "get [get event] : " + msg;
+                    
+                })
+            }
+
+
+            function SendValue(){
+                let value = Math.floor(Math.random() * 100);
+                document.querySelector('.send_value').innerHTML = "send [chat event] : " + value;
+                socket.emit('chat', value);
+            }
+
+
         </script>
     </body>
 </html>

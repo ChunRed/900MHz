@@ -1,14 +1,20 @@
 const express = require("express");
 const app = express();
 const path = require('path');
+var fs = require('fs');
 
 const http = require('http').Server(app);
+
+
 const engine = require('ejs-locals');
 const io = require('socket.io')(http);
 
 
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use(express.static('node_modules'));
+app.use(express.static('node_modules/bootstrap/dist/css'));
+app.use(express.static('node_modules/bootstrap/dist/js'));
+app.use(express.static('src'));
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -38,5 +44,11 @@ io.on('connection', function (socket) {
     });
 });
 
-let PORT = process.env.PORT || 8080;
-http.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+let PORT = 443;
+// http.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+http.listen(process.env.PORT || PORT, function() {
+    var host = http.address().address
+    var port = http.address().port
+    console.log('App listening at ', host, port)
+});
