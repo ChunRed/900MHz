@@ -42,7 +42,7 @@
             <input
                 class='  btn btn-outline-light'
                 type='button'
-                value='connect https : 443'
+                value='connect https : 8080'
                 onClick="HTTPSConnect()" />
         </div>
 
@@ -50,7 +50,7 @@
             <input
                 class='  btn btn-outline-light'
                 type='button'
-                value='connect http : 443'
+                value='connect http : 8080'
                 onClick="HTTPConnect()" />
         </div>
 
@@ -74,7 +74,7 @@
 
         <script>
             let socket;
-            SocketConnect();
+            
 
             function SocketCustomConnect(){
                 let IP = document.querySelector('.input_value').value;
@@ -88,8 +88,8 @@
             }
 
             function HTTPSConnect(){
-                console.log('https://huang.us-east-1.elasticbeanstalk.com:443'); 
-                socket = io.connect("https://huang.us-east-1.elasticbeanstalk.com:443");  
+                console.log('https://huang.us-east-1.elasticbeanstalk.com:8080'); 
+                socket = io.connect("https://huang.us-east-1.elasticbeanstalk.com:8080");  
                 
                 socket.on('get', (msg) => {
                     document.querySelector('.socket_value').innerHTML = "get [get event] : " + msg;
@@ -99,8 +99,8 @@
 
 
             function HTTPConnect(){
-                console.log('http://huang.us-east-1.elasticbeanstalk.com:443'); 
-                socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:443");  
+                console.log('http://huang.us-east-1.elasticbeanstalk.com:8080'); 
+                socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");  
                 
                 socket.on('get', (msg) => {
                     document.querySelector('.socket_value').innerHTML = "get [get event] : " + msg;

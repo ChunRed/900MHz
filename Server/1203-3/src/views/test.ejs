@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>900Hz console</title>
+
+        <script src="socket.io-client/dist/socket.io.js"></script>
+
+        <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+        <div className="container-fluid bg-black ">
+
+            <div class="row">
+                <h1 class="text-center ">900hz Socket test</h1>
+            </div>
+
+            <div class="row">
+                <h2 class="socket_value text-center">socket value</h2>
+            </div>
+
+
+            <div className="row mt-1 justify-content-center ">
+                <div className="input-group mt-2 ">
+                    <input id='input_value' type="text" className="form-control" placeholder="your message..." aria-label="Write Message In This Barcode" aria-describedby="basic-addon2" />
+
+                    <div className="input-group-append mt-3">
+                        <button className="btn btn-outline-light" data-input="#input_value" onClick={} type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        
+
+
+
+        <script>
+            let socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");
+
+            socket.on('chat', (msg) => {
+                document.querySelector('.socket_value').innerHTML = "socket value: " + msg;
+                console.log(msg);
+                
+            })
+        </script>
+    </body>
+</html>

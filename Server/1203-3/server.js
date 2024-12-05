@@ -1,20 +1,14 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-var fs = require('fs');
 
 const http = require('http').Server(app);
-
-
 const engine = require('ejs-locals');
 const io = require('socket.io')(http);
 
 
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use(express.static('node_modules'));
-app.use(express.static('node_modules/bootstrap/dist/css'));
-app.use(express.static('node_modules/bootstrap/dist/js'));
-app.use(express.static('src'));
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -40,7 +34,7 @@ io.on('connection', function (socket) {
     socket.on('chat', function (msg) {
         console.log('message from user#' + socket.userId + ": " + msg);
         io.emit('chat', msg);
-        io.emit('get', "get message: " + msg.toString());
+        io.emit('get', msg);
     });
 });
 
