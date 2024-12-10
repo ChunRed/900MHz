@@ -22,8 +22,13 @@ app.set('view engine', 'ejs');
 
 // setup express router
 app.get('/', function (req, res) {
-    res.render('test', {title: "900Hz Console"});
+    res.render('main', {title: "900Hz Console"});
 }); 
+
+
+app.get('/test', function (req, res) {
+    res.render('test', {title: "900Hz Console"});
+});
 
 
 io.on('connection', function (socket) {
