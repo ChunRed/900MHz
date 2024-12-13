@@ -1,24 +1,20 @@
 
 let canvas;
 
-<<<<<<< HEAD
 let canvas_width = 300;
-let canvas_height = 400;
+let canvas_height = 300;
 
 let segments = [];
-let segmentWidth = 70; // 橢圓長度
-let segmentHeight = 15; // 橢圓寬度
+let segmentStates = [];
+let segmentWidth = 100; // 橢圓長度
+let segmentHeight = 30; // 橢圓寬度
 let centerX = 150; // 顯示器中心X座標
-let centerY = 200; // 顯示器中心Y座標
-let segmentSpacing = 80; // 垂直間距
-let horizontalOffset = 40; // 水平間距
+let centerY = 150; // 顯示器中心Y座標
+let segmentSpacing = 120; // 垂直間距
+let horizontalOffset = 60; // 水平間距
 let buttonX = 150; // 送出按鈕的X座標
 let buttonY = 350; // 送出按鈕的Y座標
 let buttonRadius = 30; // 
-=======
-let canvas_width = 200;
-let canvas_height = 200;
->>>>>>> 2294d8999c2a53f7db08be93ba84d7aac1d9f40d
 
 function setup() {
 
@@ -43,7 +39,7 @@ function setup() {
 
 
 function draw(){
-    background(100);
+    background(150);
 
     // 繪製每一段
     for (let seg of segments) {
@@ -60,7 +56,7 @@ function drawSegment(seg) {
     push();
     translate(seg.x, seg.y); // 移動位置
     rotate(radians(seg.rotation)); // 旋轉
-    
+    stroke(255);
     // 設定顏色
     if (seg.active) {
       fill(255); // 白色 (按下)
@@ -100,6 +96,8 @@ function touchStarted() {
         handleSubmit();
       }
     
+    handleSubmit();
+    
   }
   
   
@@ -131,11 +129,18 @@ function touchStarted() {
   // 處理送出邏輯
   function handleSubmit() {
     // 紀錄所有段的 active 狀態
-    let segmentStates = segments.map(seg => (seg.active ? 1 : 0));
-    alert(segmentStates); // 印出紀錄的陣列
+    segmentStates = segments.map(seg => (seg.active ? 1 : 0));
+    console.log(segmentStates);
+
+    let UI = document.querySelectorAll('.seg1'); 
+    
+    for(let i=0; i<UI.length; i++){
+
+      UI[i].style.opacity = 0.3+(segmentStates[i]*0.7);
+    }
 
     // 重置所有段的 active 狀態為 false
-  for (let seg of segments) {
-    seg.active = false;
-  }
+    // for (let seg of segments) {
+    //   seg.active = false;
+    // }
   }

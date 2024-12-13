@@ -13,6 +13,8 @@
     "bootstrap": "^5.3.3",
     "ejs-locals": "^1.0.2",
     "express": "^4.21.1",
+    "jquery": "^3.7.1",
+    "knockout": "^2.2.1",
     "nodeman": "^1.1.2",
     "p5": "^1.11.2",
     "socket.io": "^2.4.1"
