@@ -42,10 +42,9 @@ io.on('connection', function (socket) {
     socket.userId = userId++;
     console.log('a user connected, user id: ' + socket.userId);
 
-    socket.on('chat', function (msg) {
+    socket.on('Send_MSG', function (msg) {
         console.log('message from user#' + socket.userId + ": " + msg);
-        io.emit('chat', msg);
-        io.emit('get', "get message: " + msg.toString());
+        io.emit('Get_MSG', msg);
     });
 });
 
