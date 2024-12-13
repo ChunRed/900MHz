@@ -1,8 +1,8 @@
 
 let canvas;
 
-let canvas_width = 300;
-let canvas_height = 300;
+let canvas_width = 200;
+let canvas_height = 200;
 
 function setup() {
 
