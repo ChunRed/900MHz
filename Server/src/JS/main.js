@@ -13,7 +13,7 @@ let segmentSpacing = 80; // 垂直間距
 let horizontalOffset = 40; // 水平間距
 let buttonX = 150; // 送出按鈕的X座標
 let buttonY = 350; // 送出按鈕的Y座標
-let buttonRadius = 30; // 按鈕半徑
+let buttonRadius = 30; // 
 
 function setup() {
 

@@ -16,24 +16,92 @@
         <link href="/bootstrap.css" rel="stylesheet">
         <link href="style/layout.css" rel="stylesheet">
 
+        <script
+            src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script
+            src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script
+            src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+        <script src="/js/sevenSeg.js"></script>
+
     </head>
     <body>
-        <div className="container-fluid">
+        <div className="container-fluid ">
 
             <div class="row">
                 <h1 class="text-center text-light mt-5 mb-5">900 MHz</h1>
             </div>
 
-            <div class="row mt-5 justify-content-center">
-                <div class="text-center text-light h4"> P5.js canvas (gray place)</div>
+            <!-- //MARK:  Display Place -->
+
+            <div class="row mt-2">
+                <div class="col-12 7Seg"></div>
             </div>
 
-            <div class="row mt-2 justify-content-center">
-                <div class="col-12 CanvasParent bg-black"></div>
+            <!-- //MARK: Test Button -->
+
+            <div class="row mt-5">
+                <div class="send_value text-center text-light">send [Send_MSG] : 0</div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="socket_value text-center text-light">get [Get_MSG] : 0</div>
+            </div>
+
+            <div class="row m-3">
+                <input
+                    class='  btn btn-outline-light'
+                    type='button'
+                    value='send random value to [Send_MSG]'
+                    onClick="SendValue()" />
+            </div>
+
+            <!-- //MARK:  Canvas Place -->
+            <div class="row" style="height: 60vh;"></div>
+            
+
+            <div class="row mt-5">
+                <div class="text-center text-light h4"> P5.js canvas (gray
+                    place)</div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12 CanvasParent "></div>
             </div>
 
         </div>
 
         <script src="/js/main.js"></script>
+
+        <script>
+
+
+            let socket;
+            socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");   
+                
+            socket.on('Get_MSG', (msg) => {
+                document.querySelector('.socket_value').innerHTML = "get [Get_MSG] : " + msg;
+                $(".7Seg").sevenSeg({ value: msg });
+
+            })
+        
+
+
+            function SendValue(){
+                let value = Math.floor(Math.random() * 10000000);
+                document.querySelector('.send_value').innerHTML = "send [Send_MSG] : " + value;
+                socket.emit('Send_MSG', value);
+            }
+
+
+            $(".7Seg").sevenSeg({
+            digits:7, 
+            value:1234567, 
+            colorOff: "#333333", 
+            colorOn: "#ffffff", 
+            slant: 1
+        });
+
+        </script>
     </body>
 </html>
