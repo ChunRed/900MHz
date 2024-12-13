@@ -1,6 +1,7 @@
 
 let canvas;
 
+<<<<<<< HEAD
 let canvas_width = 300;
 let canvas_height = 400;
 
@@ -14,6 +15,10 @@ let horizontalOffset = 40; // 水平間距
 let buttonX = 150; // 送出按鈕的X座標
 let buttonY = 350; // 送出按鈕的Y座標
 let buttonRadius = 30; // 
+=======
+let canvas_width = 200;
+let canvas_height = 200;
+>>>>>>> 2294d8999c2a53f7db08be93ba84d7aac1d9f40d
 
 function setup() {
 
