@@ -18,7 +18,9 @@ body {
 
 .display {
     position: absolute;
+    left: 20%;
     display: block;
-    width: auto;
-    max-height: 7vh;
+    max-width: 60%;
+    height: auto;
+    opacity: 0.3;
 }
