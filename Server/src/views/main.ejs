@@ -145,6 +145,7 @@
         <script>
 
             let socket;
+            let StringValue = '';
 
             let index = 0;
             let fine_value = [
@@ -160,7 +161,7 @@
             socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");   
                 
             socket.on('Get_MSG', (msg) => {
-                document.querySelector('.socket_value').innerHTML = "get [Get_MSG] : <br>" + msg[0] + '<br>' + msg[1] + '<br>' + msg[2] + '<br>' + msg[3] + '<br>' + msg[4] + '<br>' + msg[5] + '<br>' + msg[6];
+                document.querySelector('.socket_value').innerHTML = "get [Get_MSG] : <br>" + StringValue;
             })
 
 
@@ -189,10 +190,19 @@
                 fine_value[index] = segmentStates;
 
                 let value = segmentStates.toString();
-                
-                socket.emit('Send_MSG', fine_value);
 
-                console.log(fine_value);
+                StringValue = '';
+
+                for(let i=0; i<7; i++){
+                    for(let j=0; j<7; j++){
+                        StringValue += fine_value[i][j];
+                    }
+                    StringValue += ',';
+                }
+                
+                socket.emit('Send_MSG', StringValue);
+
+                console.log(StringValue);
                 
             }
 
