@@ -24,6 +24,23 @@
 
             <div class="row">
                 <!-- Modal -->
+                <div class="modal fade " id="ContentModal" 
+                    data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" >
+                        <div class="modal-content " style="background-color: rgb(10,10,10)!important;">
+                            
+                            <div class="modal-body">
+                                <img src="/media/intro.png" class="w-100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Modal -->
                 <div class="modal fade " id="MSGModal" 
                     data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -246,7 +263,13 @@
         </div>
 
         <script>
-            
+
+            var myModal = new bootstrap.Modal(document.getElementById('ContentModal'), {keyboard: false})
+            myModal.show();
+
+            setTimeout(() => {
+                myModal.hide();
+            }, 8000);
 
             let socket;
             let StringValue = '';
