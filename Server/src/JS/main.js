@@ -42,7 +42,7 @@ function setup() {
 
 
 function draw() {
-  background(150);
+  background(120);
 
   // 繪製每一段
   for (let seg of segments) {
@@ -63,7 +63,7 @@ function drawSegment(seg) {
   if (seg.active) {
     fill(255); // 白色 (按下)
   } else {
-    fill(150); // 灰色 (預設)
+    fill(120); // 灰色 (預設)
   }
 
   // 繪製有尖端的段
@@ -139,7 +139,7 @@ function handleSubmit() {
     UI[i].style.opacity = 0.3 + (segmentStates[i] * 0.7);
   }
 
-
+  
 }
 
 
