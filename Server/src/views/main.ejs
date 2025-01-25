@@ -244,6 +244,7 @@
             <div class="row mt-5 justify-content-center">
 
                 <button 
+                    id= "send_button"
                     class='col-6  btn  orange'
                     onClick="SendValue()"
                 >傳送 | SEND</button>
@@ -343,25 +344,56 @@
                 IndexIcon();
             }
 
+            let wait = 0;
+            let pass_message = '';
 
             function SendValue(){
-                fine_value[index] = segmentStates;
+                
+                if(wait == 0){
+                    fine_value[index] = segmentStates;
 
-                let value = segmentStates.toString();
+                    let value = segmentStates.toString();
 
-                StringValue = '';
+                    StringValue = '';
 
-                for(let i=0; i<7; i++){
-                    for(let j=0; j<7; j++){
-                        StringValue += fine_value[i][j];
+                    for(let i=0; i<7; i++){
+                        for(let j=0; j<7; j++){
+                            StringValue += fine_value[i][j];
+                        }
+                        StringValue += ',';
                     }
-                    StringValue += ',';
-                }
-                
-                socket.emit('Send_MSG', StringValue);
 
-                console.log(StringValue);
-                
+                    if(StringValue == "0000000,0000000,0000000,0000000,0000000,0000000,0000000,"){
+                        alert("請輸入數值！");
+                    }
+                    else if(StringValue == pass_message){
+                        alert("請改變數值！");
+                    }
+                    else{
+                        console.log(pass_message);
+                        
+                        pass_message = StringValue;
+
+                        console.log(pass_message);
+
+                        socket.emit('Send_MSG', StringValue);
+                        
+                        let timer = setInterval(() => {
+                            if(wait < 15){
+                                wait += 1;
+                                document.getElementById('send_button').innerHTML = "傳送 | SEND (" + (15 - wait) + ")"; 
+                            }
+                            else{
+                                wait = 0;
+                                document.getElementById('send_button').innerHTML = "傳送 | SEND"
+                                clearInterval(timer);
+                            }
+                            console.log(wait);
+                            
+                        }, 1000);
+                    }
+                    console.log(StringValue);
+                }
             }
 
 
