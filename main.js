@@ -1,17 +1,19 @@
 
 let canvas;
 
-let canvas_width = ((innerWidth >= 1000 ? 300 : innerWidth)/12)*8;
-let canvas_height = 300;
+let canvas_width = ((innerWidth >= 1000 ? 800 : innerWidth)/12)*8;
+let canvas_height = innerWidth >= 1000 ? innerWidth*0.3 : 300;
+
+let number_scale = innerWidth >= 1000 ? innerWidth*0.08 : 100;
 
 let segments = [];
 let segmentStates = [];
-let segmentWidth = 100; // 橢圓長度
-let segmentHeight = 30; // 橢圓寬度
+let segmentWidth = number_scale; // 橢圓長度
+let segmentHeight = number_scale*0.3; // 橢圓寬度
 let centerX = canvas_width/2; // 顯示器中心X座標
-let centerY = 150; // 顯示器中心Y座標
-let segmentSpacing = 120; // 垂直間距
-let horizontalOffset = 60; // 水平間距
+let centerY = canvas_height/2; // 顯示器中心Y座標
+let segmentSpacing = number_scale*1.2; // 垂直間距
+let horizontalOffset = number_scale*0.6; // 水平間距
 let buttonX = 150; // 送出按鈕的X座標
 let buttonY = 350; // 送出按鈕的Y座標
 let buttonRadius = 30; // 
@@ -31,6 +33,7 @@ function setup() {
 
   canvas.style("position", "absolute");
   canvas.style("left", (parent_width/2) - (canvas_width/2) + 10 +"px");
+  //Parent.style("height", "50px");
 
   // canvas.style("left", (innerWidth / 2) - (canvas_width / 2) + "px");
 
