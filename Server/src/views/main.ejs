@@ -32,7 +32,22 @@
                         <div class="modal-content " style="background-color: rgb(10,10,10)!important;">
                             
                             <div class="modal-body">
-                                <img src="/media/intro.png" class="w-100">
+
+                                <div class="row">
+                                    <img src="/media/intro.png" class="w-100">
+                                </div>
+                                
+
+                                <div class="row m-3 justify-content-center">
+
+                                    <button 
+                                        id="Modal_button"
+                                        class='col-6  btn  orange'
+                                        onClick="CloseModal()"
+                                    >確認</button>
+                    
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -142,7 +157,7 @@
             </div>
 
             <div class="row">
-                <div class="text-center text-light">ver 25.1.6</div>
+                <div class="text-center text-light">ver 25.1.28</div>
             </div>
 
             <div class="row  justify-content-center mt-5" style="height: 15vw;">
@@ -265,12 +280,18 @@
 
         <script>
 
+
             var myModal = new bootstrap.Modal(document.getElementById('ContentModal'), {keyboard: false})
             myModal.show();
 
+            document.getElementById('Modal_button').style.display = 'none';
             setTimeout(() => {
-                myModal.hide();
+                document.getElementById('Modal_button').style.display = 'block';
             }, 8000);
+
+            function CloseModal(){
+                myModal.hide();
+            }
 
             let socket;
             let StringValue = '';
@@ -286,11 +307,27 @@
                 [0,0,0,0,0,0,0],
             ];
 
-            socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");   
+            socket = io.connect("http://huang.us-east-1.elasticbeanstalk.com:8080");
+            //socket = io.connect("http://192.168.0.52:8080"); 
+            
+            let Stop_MSG = false;
+            socket.on('Stop_MSG', (msg) => {
+                Stop_MSG = msg;
+                if(Stop_MSG){
+                    alert("訊息過多，請稍待5分鐘後再傳送謝謝！");
+                };
+                //console.log(Stop_MSG);
+                
+            })
+
+            // socket.on('Get_IP', (msg) => {
+            //     console.log(msg);
+                
+            // })
                 
             socket.on('Get_MSG', (msg) => {
                 let newmsg = msg.split(',');
-                console.log(newmsg);
+                //console.log(newmsg);
                 
                 
                 
@@ -300,10 +337,6 @@
                         UI[j].style.opacity = 0.3 + (newmsg[i][j] * 0.7);
                     }
                 }
-
-                
-
-                
 
                 //$('#MSGModal').modal('hide');
                 $('#MSGModal').modal('show');
@@ -329,7 +362,7 @@
                 if(index < 6) index += 1;
                 else index = 0;
                 Reset ();
-                console.log(index);   
+                //console.log(index);   
                 IndexIcon();
             }
 
@@ -340,60 +373,81 @@
                 if(index > 0) index -=1;
                 else index = 6;
                 Reset ();
-                console.log(index);
+                //console.log(index);
                 IndexIcon();
             }
 
             let wait = 0;
             let pass_message = '';
+            let day_limit = 0;
+            let count_1 = 0;
 
             function SendValue(){
-                
-                if(wait == 0){
-                    fine_value[index] = segmentStates;
+                if(day_limit < 10){
+                    day_limit += 1;
+                    if(wait == 0 && !Stop_MSG){
+                        fine_value[index] = segmentStates;
 
-                    let value = segmentStates.toString();
+                        let value = segmentStates.toString();
 
-                    StringValue = '';
+                        StringValue = '';
 
-                    for(let i=0; i<7; i++){
-                        for(let j=0; j<7; j++){
-                            StringValue += fine_value[i][j];
+                        for(let i=0; i<7; i++){
+                            for(let j=0; j<7; j++){
+                                StringValue += fine_value[i][j];
+                            }
+                            StringValue += ',';
                         }
-                        StringValue += ',';
-                    }
 
-                    if(StringValue == "0000000,0000000,0000000,0000000,0000000,0000000,0000000,"){
-                        alert("請輸入數值！");
-                    }
-                    else if(StringValue == pass_message){
-                        alert("請改變數值！");
-                    }
-                    else{
-                        console.log(pass_message);
+                        for(let i=0; i<56; i++){
+                            if(StringValue[i] == '1') count_1 += 1;
+                        }
+                        //console.log(count_1 );
+
                         
-                        pass_message = StringValue;
 
-                        console.log(pass_message);
-
-                        socket.emit('Send_MSG', StringValue);
-                        
-                        let timer = setInterval(() => {
-                            if(wait < 15){
-                                wait += 1;
-                                document.getElementById('send_button').innerHTML = "傳送 | SEND (" + (15 - wait) + ")"; 
-                            }
-                            else{
-                                wait = 0;
-                                document.getElementById('send_button').innerHTML = "傳送 | SEND"
-                                clearInterval(timer);
-                            }
-                            console.log(wait);
+                        if(StringValue == "0000000,0000000,0000000,0000000,0000000,0000000,0000000,"){
+                            alert("請輸入數值！");
+                        }
+                        else if(StringValue == pass_message){
+                            alert("請改變數值！");
+                        }
+                        else if(count_1 < 7){
+                            alert("請輸入更多值！");
+                            count_1 = 0;
+                        }
+                        else{
+                            // console.log(pass_message);
                             
-                        }, 1000);
+                            pass_message = StringValue;
+
+                            //console.log(pass_message);
+                            
+
+                            socket.emit('Send_MSG', StringValue);
+                            
+                            let timer = setInterval(() => {
+                                if(wait < 15){
+                                    wait += 1;
+                                    document.getElementById('send_button').innerHTML = "傳送 | SEND (" + (15 - wait) + ")"; 
+                                }
+                                else{
+                                    count_1 = 0;
+                                    wait = 0;
+                                    document.getElementById('send_button').innerHTML = "傳送 | SEND"
+                                    clearInterval(timer);
+                                }
+                                //console.log(wait);
+                                
+                            }, 1000);
+                        }
+                        //console.log(StringValue);
                     }
-                    console.log(StringValue);
                 }
+                // console.log(day_limit);
+                //         console.log(wait);
+                //         console.log(Stop_MSG);
+                
             }
 
 

@@ -1,0 +1,92 @@
+
+.BG-Left{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 0px;
+    background-color: black;
+}
+
+.BG-Right{
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 0px;
+    background-color: black;
+}
+
+/* if window width > 1000px : */
+@media (min-width: 1000px) {
+    .ROW {
+        max-width: 40vw;
+        margin-left: 30vw;
+    }
+    .BG-Left{
+        width: 30vw;
+        background-color: black
+    }
+    .BG-Right{
+        width: 30vw;
+        background-color: black
+    }
+    .Index_Button{
+        min-width: 70px;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bg-black {
+    background-color: rgb(172, 172, 172);
+    color: rgb(176, 176, 176);
+}
+
+
+
+html, body {
+    background-image: linear-gradient(rgb(240, 210, 120) 0%,  rgba(120, 120, 120, 1) 30%);
+    /* background-color: rgba(120, 120, 120, 1); */
+    margin: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+
+
+.display {
+    position: absolute;
+    left: 20%;
+    display: block;
+    max-width: 60%;
+    height: auto;
+    opacity: 0.3;
+}
+
+
+.arrow {
+    background-color: aqua;
+    position: absolute;
+    display: block;
+    max-width: 10%;
+    height: auto;
+    opacity: 1;
+}
+
+
+.orange{
+    background-color: rgb(240, 210, 120);
+    color: rgb(120, 120, 120);
+}
